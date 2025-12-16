@@ -41,3 +41,18 @@ services:
       - "5439:5432"
     volumes:
       - ./haproxy:/usr/local/etc/haproxy
+  api:
+    build: ./partieD
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db-primary
+    environment:
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=app_pwd
+      - POSTGRES_DB=appdb
+      - POSTGRES_HOST=db-replica
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST2=haproxy
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
